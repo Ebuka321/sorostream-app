@@ -71,10 +71,17 @@ export function usePriceFeed(
     let cancelled = false;
 
     async function refresh() {
-      const p = await fetchFn();
-      if (!cancelled) {
-        setPrice(p);
-        setLoading(false);
+      try {
+        const p = await fetchFn();
+        if (!cancelled) {
+          setPrice(p);
+          setLoading(false);
+        }
+      } catch {
+        if (!cancelled) {
+          setPrice(null);
+          setLoading(false);
+        }
       }
     }
 

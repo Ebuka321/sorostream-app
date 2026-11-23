@@ -94,7 +94,7 @@ export default function StreamShareButtons({
         // share sheet — we only show a toast on explicit success.
       } catch (err) {
         // AbortError means the user dismissed the share sheet — that's fine.
-        if (err instanceof Error && err.name !== "AbortError") {
+        if (!err || (err as { name?: string }).name !== "AbortError") {
           addToast("Share failed. Try the copy button instead.", "error");
         }
       }
